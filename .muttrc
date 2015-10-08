@@ -1,0 +1,31 @@
+source "gpg2 -dq $HOME/.my-pwds.gpg |"
+
+set from = 'jaredds66@gmail.com'
+set realname = 'Jared Skinner'
+set imap_user = 'jaredds66@gmail.com'
+set imap_pass = $my_pw_personal
+
+# REMOTE GMAIL FOLDERS
+set folder = 'imaps://imap.gmail.com:993'
+set spoolfile = '+INBOX'
+set postponed = '+[Google Mail]/Drafts'
+#set trash = '+[Google Mail]/Trash'
+#set any_label = "
+
+# LOCAL FOLDERS FOR CACHED HEADERS AND CERTIFICATES
+set header_cache =~/.mutt/cache/headers
+set message_cachedir =~/.mutt/cache/bodies
+set certificate_file =~/.mutt/certificates
+
+# SMTP SETTINGS
+set smtp_url = 'smtp://jaredds66@smtp.gmail.com:587/'
+set smtp_pass = $my_pw_personal
+
+# SECURING
+set move = no #Stop asking to move read messages to mbox!
+set imap_keepalive = 900
+
+# BINDINGS
+#bind editor noop
+#macro index gi '=INBOX' 'Go to inbox'
+#macro index ga '=[Google Mail]/All Mail' 'Go to all mail'
