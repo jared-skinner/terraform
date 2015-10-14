@@ -34,7 +34,7 @@ alias extract="tar -xzvf"
 export TERM='xterm-256color'
 
 # this takes care of ssh and pgp management
-eval $(keychain --eval id_rsa github_id_rsa)
+eval $(keychain --quiet --agents gpg,ssh --eval id_rsa github_id_rsa FD0E9B93)
 
 # still need this, i don't know why pgp isn't tracking well right now
 GPG_TTY=$(tty)

@@ -25,7 +25,7 @@ set imap_pass = $my_gpass
 
 set smtp_pass = $my_gpass
 #set smtp_url = "smtp://jaredds66@gmail.com:587/"
-set smtp_url = "smtp://jaredds66@gmail.com:465/"
+set smtp_url = "smtp://jaredds66@smtp.gmail.com:587/"
 
 set from = "jaredds66@gmail.com"
 set realname = "Jared Skinner"
@@ -69,3 +69,26 @@ ignore "DKIM-Signature:"
 hdr_order Date From To Cc
 alternative_order text/plain text/html *
 auto_view text/html
+
+
+
+#colors
+#---- Mutt Colors for Black Background -------
+color   hdrdefault   blue              black
+color   quoted       blue              black
+color   signature    blue              black
+color   attachment   red               black
+color   message      brightred         black
+color   error        brightred         black
+color   indicator    green               black
+color   status       brightgreen       blue
+color   tree         white             black
+color   normal       white             black
+color   markers      red               black
+color   search       white             black
+color   tilde        brightmagenta     black
+color   index        blue              black ~F
+color   index        red               black "~N|~O"
+
+#collapse threads by default
+folder-hook . "exec collapse-all"
