@@ -1,31 +1,71 @@
-source "gpg2 -dq $HOME/.my-pwds.gpg |"
+set my_gpass=`pass google.com/gmail/jaredds66@gmail.com_x220`
 
-set from = 'jaredds66@gmail.com'
-set realname = 'Jared Skinner'
-set imap_user = 'jaredds66@gmail.com'
-set imap_pass = $my_pw_personal
+# Use GPGME
+set crypt_use_gpgme = yes
 
-# REMOTE GMAIL FOLDERS
-set folder = 'imaps://imap.gmail.com:993'
-set spoolfile = '+INBOX'
-set postponed = '+[Google Mail]/Drafts'
-#set trash = '+[Google Mail]/Trash'
-#set any_label = "
+# Sign replies to signed email
+set crypt_replysign = yes
 
-# LOCAL FOLDERS FOR CACHED HEADERS AND CERTIFICATES
-set header_cache =~/.mutt/cache/headers
-set message_cachedir =~/.mutt/cache/bodies
-set certificate_file =~/.mutt/certificates
+# Encrypt replies to encrypted email
+set crypt_replyencrypt = yes
 
-# SMTP SETTINGS
-set smtp_url = 'smtp://jaredds66@smtp.gmail.com:587/'
-set smtp_pass = $my_pw_personal
+# Encrypt and sign replies to encrypted and signed email
+set crypt_replysignencrypted = yes
 
-# SECURING
-set move = no #Stop asking to move read messages to mbox!
-set imap_keepalive = 900
+# Attempt to verify email signatures automatically
+set crypt_verify_sig = yes
 
-# BINDINGS
-#bind editor noop
-#macro index gi '=INBOX' 'Go to inbox'
-#macro index ga '=[Google Mail]/All Mail' 'Go to all mail'
+# Autosign messages
+set crypt_autosign = yes
+
+
+#setts passwords
+set imap_user = "jaredds66@gmail.com"
+set imap_pass = $my_gpass
+
+set smtp_pass = $my_gpass
+#set smtp_url = "smtp://jaredds66@gmail.com:587/"
+set smtp_url = "smtp://jaredds66@gmail.com:465/"
+
+set from = "jaredds66@gmail.com"
+set realname = "Jared Skinner"
+
+set editor = "vim"
+
+## GMail Config
+#(most of this should work with other IMAP accounts) 
+## Basic config, you can leave this as is in most cases
+# Not sure if timeout and keepalive value tweaking will help intermittent connection issues
+# (time values are in seconds)
+set wait_key = no
+set folder = "imaps://imap.gmail.com:993"
+set spoolfile = "+INBOX"
+set imap_check_subscribed
+set hostname = gmail.com
+set mail_check = 180
+set timeout = 300
+# Allow Mutt to open new imap connection automatically.
+unset imap_passive
+# Keep IMAP connection alive by polling intermittently
+set imap_keepalive = 210
+set postponed = "+[GMail]/Drafts"
+set record = "+[GMail]/Sent Mail"
+set header_cache=~/.mutt/cache/headers
+set message_cachedir=~/.mutt/cache/bodies
+set certificate_file=~/.mutt/certificates
+set alias_file=~/.mutt/aliases
+set move = no
+set include
+set sort = 'threads'
+set sort_aux = 'reverse-last-date-received'
+set auto_tag = yes
+
+## Reminds you of missing subject&unmodified or empty body with msg sent as default
+set abort_nosubject = ask-no
+set abort_unmodified = ask-no
+ignore "Authentication-Results:"
+ignore "DomainKey-Signature:"
+ignore "DKIM-Signature:"
+hdr_order Date From To Cc
+alternative_order text/plain text/html *
+auto_view text/html
