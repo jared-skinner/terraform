@@ -12,6 +12,7 @@ urxvt.depth: 32
 URxvt.foreground: grey80
 URxvt.tintColor: #262626
 URxvt.borderColor: #888888
+URxvt.perl-ext-common: ...,tabbed,...
 
 *foreground:     rgba:0000/0000/0000/dddd
 *background:     rgb:10/10/10
