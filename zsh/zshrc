@@ -38,7 +38,6 @@ eval $(keychain --quiet --agents gpg,ssh --eval id_rsa github_id_rsa FD0E9B93)
 
 source ~/.zsh_local
 
-
 #fuzzy completion
 # 0 -- vanilla completion (abc => abc)
 # 1 -- smart case completion (abc => Abc)
@@ -49,4 +48,4 @@ zstyle ':completion:*' matcher-list '' \
   'r:[^[:alpha:]]||[[:alpha:]]=** r:|=* m:{a-z\-}={A-Z\_}' \
   'r:[[:ascii:]]||[[:ascii:]]=** r:|=* m:{a-z\-}={A-Z\_}'
 
-LS_COLORS=$LS_COLORS:'di=0;37:' ; export LS_COLORS
+LS_COLORS=$LS_COLORS:'di=0;94:ow=1;90;43' ; export LS_COLORS
