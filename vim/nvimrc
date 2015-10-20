@@ -18,7 +18,7 @@
 
 " UI Config {{{
 set modelines=1					" check end of file for folding instructions
-set encoding=utf-8				" self explanatory
+"set encoding=utf-8				" self explanatory
 set number						" this sets line numbers
 set showcmd						" we probably won't need this
 set cursorline					" highlight current line
@@ -32,7 +32,7 @@ set guioptions-=r				" remove right scrollbar
 set guioptions-=L				" remove left scrollbar
 set ruler						" keep track for row/column
 set titlestring=%{getcwd()}		" set the window title to the PWD
-set nocompatible				" be iMproved, required
+"set nocompatible				" be iMproved, required
 set hidden						" buffers remain in memory when switching to a different one
 set history=10000				" : command line history
 set wrap! linebreak nolist		" set wrap options for when wrap is toggled
@@ -43,6 +43,9 @@ set listchars=tab:▶\ ,eol:¬		" show tabs and EOL as characters
 set tabstop=4					" number of visual spaces per TAB
 set softtabstop=4				" number of spaces in tab when editing
 set shiftwidth=4				" this is for justification using > and <
+
+
+
 
 filetype indent on				" load file type specific indent files
 filetype off					" required
@@ -117,32 +120,28 @@ nnoremap <leader>c :tabclose<CR>
 nnoremap <leader>w :set wrap! linebreak nolist <CR> :set list <CR> :set listchars=tab:▶\ ,eol:¬ <CR>
 " }}}
 " Plugins {{{
-if has('win32')
-	set rtp+=C:/Program\ Files\ (x86)/vim/vimfiles/bundle/Vundle.vim/
-	let path='C:/Program\ Files\ (x86)/vim/vimfiles/bundle/'
-elseif has('unix')
-	set rtp+=~/.vim/bundle/Vundle.vim/
-	let path='~/.vim/bundle/'
-endif
+let path='~/.nvim/autoload/'
 
-call vundle#begin(path)
-	Plugin 'kien/ctrlp.vim'				" fuzzy find on files
-	Plugin 'ervandew/supertab'			" better tab completion
-	Plugin 'bling/vim-airline'			" cool window decoration
-	Plugin 'tpope/vim-fugitive'			" git wrapper for fim
-	Plugin 'airblade/vim-gitgutter'		" self explainatory
-	Plugin 'scrooloose/syntastic'		" syntax checking magic
-	Plugin 'rking/ag.vim'				" better global search
-	Plugin 'sjl/gundo.vim'				" tree undo history
-	Plugin 'moll/vim-bbye'				" close buffers without messing with window layout
-	Plugin 'tpope/vim-commentary'		" hotkeys for commenting stuff out
-	Plugin 'justinmk/vim-syntax-extra'	" more syntax highlighting
-	Plugin 'kshenoy/vim-signature'		" show marks
-	Plugin 'hdima/python-syntax'		" self explainatory
-	Plugin 'vim-scripts/autotags'		" autoupdate your ctags files
-	Plugin 'vim-scripts/Conque-GDB'		" use vim for debugging
-call vundle#end()
-
+call plug#begin(path)
+	Plug 'kien/ctrlp.vim'					" fuzzy find on files
+	Plug 'ervandew/supertab'				" better tab completion
+	Plug 'bling/vim-airline'				" cool window decoration
+	Plug 'tpope/vim-fugitive'				" git wrapper for vim
+	Plug 'airblade/vim-gitgutter'			" self explainatory
+	Plug 'rking/ag.vim'						" better global search
+	Plug 'sjl/gundo.vim'					" tree undo history
+	Plug 'moll/vim-bbye'					" close buffers without messing with window layout
+	Plug 'scrooloose/syntastic'				" syntax checking magic
+	Plug 'tpope/vim-commentary'				" hot-keys for commenting stuff out
+	Plug 'justinmk/vim-syntax-extra'		" more syntax highlighting
+	Plug 'kshenoy/vim-signature'			" show marks
+	Plug 'hdima/python-syntax'				" better python syntax
+	Plug 'vim-scripts/autotags'				" autoupdate your ctags files
+	Plug 'critiqjo/lldb.nvim'				" debugging support
+	Plug 'mhinz/vim-grepper'				" the grep that greps the hardest
+	"Plug 'Floobits/floobits-neovim'		" paired programming!
+	"Plug 'benekastah/neomake'				" A linter of bad-ass proportions
+call plug#end()
 " }}}
 " CtrlP Settings {{{
 let g:ctrlp_working_path_mode = 'ra'
@@ -166,6 +165,11 @@ set statusline+=%*
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
+" }}}
+" Grepper {{{ 
+
+"nnoremap <leader>a  :Grepper! -tool ag  -open -switch<CR>
+
 " }}}
 " Backups {{{
 if has('win32')
@@ -254,12 +258,10 @@ endif
 " Appearance {{{ 
 syntax enable "enable syntax processing
 
+set fillchars+=vert:│
+
 if has("gui_running")
-	if has("win32")
-		set guifont=DejaVu_Sans_Mono_for_Powerline:h8	" a pretty font for gui
-	elseif has("unix")
-		set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ 8	" a pretty font for gui
-	endif
+	set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ 8	" a pretty font for gui
 
 	colorscheme hybrid_material
 	set colorcolumn=81										" a ruler to make off the 80th column
@@ -285,13 +287,15 @@ if has("gui_running")
 	highlight SpellLocal	term=Underline	guisp=#77dd5a	gui=undercurl	guibg=#2D2D2D
 	highlight SpellRare		term=underline	guisp=#ae51ff	gui=undercurl	guibg=#2D2D2D
 else
-    set term=xterm
-    set t_Co=256
+	"set term=xterm
+    "set t_Co=256
     let &t_AB="\e[48;5;%dm"
     let &t_AF="\e[38;5;%dm"
 	let g:hybrid_use_Xresources = 1
 	set background=dark
 	colorscheme hybrid
+	set colorcolumn=81										" a ruler to make off the 80th column
+	"hi ColorColumn ctermbg=1
 endif
 
 " }}}
@@ -301,14 +305,11 @@ let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline_powerline_fonts = 1
 let g:Powerline_symbols = 'fancy'
 
-
-
 if has("gui_running")
 	let g:airline_theme='tomorrow'
 else
 	let g:airline_theme='hybrid'
 endif
-
 
 set laststatus=2 " for air line so the status bar at the bottom always displays
 " }}}
