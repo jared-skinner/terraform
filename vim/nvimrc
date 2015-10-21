@@ -1,24 +1,23 @@
-" This is a vim rc file ment for a *nix system.  It has the following
+" This is a nvim rc file ment for a *nix system.  It has the following
 " requirements:
 "
-" 	1. 	the molokai theme for in terminal
-" 		https://github.com/tomasr/molokai
-
 "" 	1. 	custom hybrid material theme for gvim
 " 		https://github.com/tomasr/molokai
 "
 " 	2.  the DejaVu Sans Mono for Powerline font
 "		https://github.com/powerline/fonts
 "
-" 	3. 	Vundle package manager
-" 		https://github.com/VundleVim/Vundle.vim
+" 	3. 	plug package manager
+	" 	https://github.com/junegunn/vim-plug
 "
 " 	4. 	Ag (a.k.a. the silver sercher)
 " 		https://github.com/ggreer/the_silver_searcher
+"
+" 	5.	vim-latex
+"		http://vim-latex.sourceforge.net/index.php?subject=download&title=Download
 
 " UI Config {{{
 set modelines=1					" check end of file for folding instructions
-"set encoding=utf-8				" self explanatory
 set number						" this sets line numbers
 set showcmd						" we probably won't need this
 set cursorline					" highlight current line
@@ -32,7 +31,6 @@ set guioptions-=r				" remove right scrollbar
 set guioptions-=L				" remove left scrollbar
 set ruler						" keep track for row/column
 set titlestring=%{getcwd()}		" set the window title to the PWD
-"set nocompatible				" be iMproved, required
 set hidden						" buffers remain in memory when switching to a different one
 set history=10000				" : command line history
 set wrap! linebreak nolist		" set wrap options for when wrap is toggled
@@ -43,12 +41,13 @@ set listchars=tab:▶\ ,eol:¬		" show tabs and EOL as characters
 set tabstop=4					" number of visual spaces per TAB
 set softtabstop=4				" number of spaces in tab when editing
 set shiftwidth=4				" this is for justification using > and <
+set grepprg=grep\ -nH\ $		" set grep for .tex reference completion
 
-
-
-
+filetype plugin on				" needed for vim-latex
 filetype indent on				" load file type specific indent files
 filetype off					" required
+
+let g:tex_flavor='latex'
 
 au FocusLost * silent! wa		" save all windows on lose focus
 " }}}

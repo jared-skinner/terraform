@@ -46,7 +46,7 @@ set tabstop=4					" number of visual spaces per TAB
 set softtabstop=4				" number of spaces in tab when editing
 set shiftwidth=4				" this is for justification using > and <
 
-set grepprg=grep\ -nH\ $*		" set gerp for .tex compilation
+set grepprg=grep\ -nH\ $*		" set gerp for .tex reference completion
 
 filetype plugin on				" needed for vim-latex
 filetype indent on				" load file type specific indent files
