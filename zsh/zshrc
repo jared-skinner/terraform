@@ -30,6 +30,8 @@ export ARCHFLAGS="-arch x86_64"
 # Aliases
 alias cls="clear"
 alias extract="tar -xzvf"
+alias vim="nvim"
+alias vi="nvim"
 
 export TERM='xterm-256color'
 
