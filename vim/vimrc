@@ -17,6 +17,8 @@
 " 		https://github.com/ggreer/the_silver_searcher
 
 " UI Config {{{
+
+
 set modelines=1					" check end of file for folding instructions
 set encoding=utf-8				" self explanatory
 set number						" this sets line numbers
@@ -44,8 +46,13 @@ set tabstop=4					" number of visual spaces per TAB
 set softtabstop=4				" number of spaces in tab when editing
 set shiftwidth=4				" this is for justification using > and <
 
+set grepprg=grep\ -nH\ $*		" set gerp for .tex compilation
+
+filetype plugin on				" needed for vim-latex
 filetype indent on				" load file type specific indent files
 filetype off					" required
+
+let g:tex_flavor='latex'
 
 au FocusLost * silent! wa		" save all windows on lose focus
 " }}}
