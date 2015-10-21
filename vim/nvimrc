@@ -139,7 +139,7 @@ call plug#begin(path)
 	Plug 'vim-scripts/autotags'				" autoupdate your ctags files
 	Plug 'critiqjo/lldb.nvim'				" debugging support
 	Plug 'mhinz/vim-grepper'				" the grep that greps the hardest
-	"Plug 'Floobits/floobits-neovim'		" paired programming!
+"	Plug 'Floobits/floobits-neovim'		" paired programming!
 	"Plug 'benekastah/neomake'				" A linter of bad-ass proportions
 call plug#end()
 " }}}
@@ -172,21 +172,11 @@ let g:syntastic_check_on_wq = 0
 
 " }}}
 " Backups {{{
-if has('win32')
-	" todo: clean up this...
-	set noswapfile
-	"set backup
-	"set backupdir=C:/Program\ Files\ (x86)/vim/tmp/
-	"set backupskip=/tmp/*,/private/tmp/*
-	"set directory=C:/Program\ Files\ (x86)/vim/tmp/
-	"set writebackup
-elseif has('unix')
-	set backup
-	set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
-	set backupskip=/tmp/*,/private/tmp/*
-	set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
-	set writebackup
-endif
+set backup
+set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
+set backupskip=/tmp/*,/private/tmp/*
+set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
+set writebackup
 "}}}
 " Custom Functions {{{
 " Go away and Come back.  This script auto saves session info and loads it.
