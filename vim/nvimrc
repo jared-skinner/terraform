@@ -1,19 +1,22 @@
 " This is a nvim rc file ment for a *nix system.  It has the following
 " requirements:
 "
-"" 	1. 	custom hybrid material theme for gvim
-" 		https://github.com/tomasr/molokai
+"	1.	custom hybrid material theme for gvim
+"		https://github.com/tomasr/molokai
 "
-" 	2.  the DejaVu Sans Mono for Powerline font
+"	2.	the DejaVu Sans Mono for Powerline font
 "		https://github.com/powerline/fonts
 "
-" 	3. 	plug package manager
-	" 	https://github.com/junegunn/vim-plug
+"	3.	plug package manager
+"		https://github.com/junegunn/vim-plug
 "
-" 	4. 	Ag (a.k.a. the silver sercher)
-" 		https://github.com/ggreer/the_silver_searcher
+"	4.	fzf for fuzzy find on EVERYTHING!
+"		https://github.com/junegunn/fzf
 "
-" 	5.	vim-latex
+"	5.	Ag (a.k.a. the silver sercher)
+"		https://github.com/ggreer/the_silver_searcher
+"
+"	6.	vim-latex
 "		http://vim-latex.sourceforge.net/index.php?subject=download&title=Download
 
 " UI Config {{{
@@ -42,6 +45,7 @@ set tabstop=4					" number of visual spaces per TAB
 set softtabstop=4				" number of spaces in tab when editing
 set shiftwidth=4				" this is for justification using > and <
 set grepprg=grep\ -nH\ $		" set grep for .tex reference completion
+set scrolloff=3
 
 filetype plugin on				" needed for vim-latex
 filetype indent on				" load file type specific indent files
@@ -77,7 +81,7 @@ nnoremap <CR> :nohlsearch<CR>
 nnoremap <space> za
 
 " toggle spell check
-map <F3> :setlocal spell! spelllang=en_us<CR>
+map <F4> :setlocal spell! spelllang=en_us<CR>
 
 " save and compile latex
 nnoremap <F2> :w<CR><leader>ll
@@ -123,7 +127,6 @@ nnoremap <leader>w :set wrap! linebreak nolist <CR> :set list <CR> :set listchar
 let path='~/.nvim/autoload/'
 
 call plug#begin(path)
-	Plug 'kien/ctrlp.vim'					" fuzzy find on files
 	Plug 'ervandew/supertab'				" better tab completion
 	Plug 'bling/vim-airline'				" cool window decoration
 	Plug 'tpope/vim-fugitive'				" git wrapper for vim
@@ -139,23 +142,14 @@ call plug#begin(path)
 	Plug 'vim-scripts/autotags'				" autoupdate your ctags files
 	Plug 'critiqjo/lldb.nvim'				" debugging support
 	Plug 'mhinz/vim-grepper'				" the grep that greps the hardest
+	Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+	Plug 'junegunn/fzf.vim'
 "	Plug 'Floobits/floobits-neovim'		" paired programming!
 	"Plug 'benekastah/neomake'				" A linter of bad-ass proportions
 call plug#end()
 " }}}
 " CtrlP Settings {{{
-let g:ctrlp_working_path_mode = 'ra'
-let g:ctrlp_match_window = 'bottom,order:ttb'
-let g:ctrlp_switch_buffer = 0
-let g:ctrlp_working_path_mode = 0
-
-if has('win32')
-	let g:ctrlp_user_command = 'ag %s -l --nocolor -g "" --ignore=*.dll* --ignore=*/bin* --ignore=*.obj --ignore=*.png* --ignore=*.jpg* --ignore=*/srcJava* --ignore=*/srcNET* --ignore=*/javabin*'
-elseif has('unix')
-	let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
-endif
-
-map <C-p> :CtrlP<CR>
+map <C-p> :Files .<CR>
 " }}}
 " Syntastic Settings {{{
 set statusline+=%#warningmsg#

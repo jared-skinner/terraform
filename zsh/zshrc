@@ -50,3 +50,5 @@ zstyle ':completion:*' matcher-list '' \
   'r:[[:ascii:]]||[[:ascii:]]=** r:|=* m:{a-z\-}={A-Z\_}'
 
 LS_COLORS=$LS_COLORS:'di=0;94:ow=1;90;43' ; export LS_COLORS
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
