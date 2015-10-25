@@ -148,7 +148,7 @@ call plug#begin(path)
 	"Plug 'benekastah/neomake'				" A linter of bad-ass proportions
 call plug#end()
 " }}}
-" CtrlP Settings {{{
+" FZF Settings {{{
 map <C-p> :Files .<CR>
 " }}}
 " Syntastic Settings {{{
