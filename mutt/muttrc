@@ -30,7 +30,7 @@ set smtp_url = "smtp://jaredds66@smtp.gmail.com:587/"
 set from = "jaredds66@gmail.com"
 set realname = "Jared Skinner"
 
-set editor = "vim"
+set editor = "nvim"
 
 ## GMail Config
 #(most of this should work with other IMAP accounts) 
