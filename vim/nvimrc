@@ -4,11 +4,7 @@
 "	1.	custom hybrid material theme for gvim
 "		https://github.com/tomasr/molokai
 "
-<<<<<<< HEAD
 "	2.	the DejaVu Sans Mono for Powerline font
-=======
-" 	2.  	The DejaVu Sans Mono for Powerline font
->>>>>>> e82ddae2dad1ccf1bd87ad03ffa1077ad2b0cc39
 "		https://github.com/powerline/fonts
 "
 "	3.	plug package manager
