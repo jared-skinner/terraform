@@ -57,7 +57,7 @@ au FocusLost * silent! wa		" save all windows on lose focus
 set foldenable			" enable folding
 set foldlevelstart=10	" start folding then we are 10 blocks deep
 set foldnestmax=10		" 10 nested fold max
-set foldmethod=syntax	" fold based on indent level
+set foldmethod=indent	" fold based on indent level
 " }}}
 " Remaps {{{
 " navigate between buffers using tab and shift+tab
@@ -104,9 +104,6 @@ nnoremap <leader>ez :vsp ~/.zshrc<CR>
 " reload vimrc
 nnoremap <leader>sv :source $MYVIMRC<CR>
 
-" save session
-nnoremap <leader>s :mksession<CR>
-
 " open ag.vim **note, the space at the end is there for a reason!
 nnoremap <leader>a :Ag 
 
@@ -124,9 +121,12 @@ nnoremap <leader>c :tabclose<CR>
 
 " toggle wrap, specal symbols dissappear when wrap is toggled, so this reset symbols
 nnoremap <leader>w :set wrap! linebreak nolist <CR> :set list <CR> :set listchars=tab:▶\ ,eol:¬ <CR>
+
+" save/update session
+nnoremap <leader>m :call MakeSession()<CR>
 " }}}
 " Plugins {{{
-let path='~/.nvim/autoload/'
+let path=$HOME.'/.nvim/autoload/'
 
 call plug#begin(path)
 	Plug 'ervandew/supertab'				" better tab completion
@@ -143,7 +143,6 @@ call plug#begin(path)
 	Plug 'hdima/python-syntax'				" better python syntax
 	Plug 'vim-scripts/autotags'				" autoupdate your ctags files
 	Plug 'critiqjo/lldb.nvim'				" debugging support
-	Plug 'mhinz/vim-grepper'				" the grep that greps the hardest
 	Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 	Plug 'junegunn/fzf.vim'					" fantastically fast fuzzy find
 	Plug 'scrooloose/nerdtree'				" browse files while vimming
@@ -162,11 +161,6 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 " }}}
-" Grepper {{{ 
-
-"nnoremap <leader>a  :Grepper! -tool ag  -open -switch<CR>
-
-" }}}
 " Backups {{{
 set backup
 set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
@@ -177,75 +171,55 @@ set writebackup
 " Custom Functions {{{
 " Go away and Come back.  This script auto saves session info and loads it.
 
-" todo; update this for linux
-if has('win32')
-	" Creates a session
-	function! MakeSession()
-		let a:cwd_string = getcwd()
-		let a:cwd_string = substitute(a:cwd_string, ':', '', 'g') 
-		let a:cwd_string = substitute(a:cwd_string, '/', '_', 'g')
-		let a:cwd_string = substitute(a:cwd_string, ' ', '_', 'g')
-		let a:cwd_string = substitute(a:cwd_string, '\', '_', 'g')
+" Get cwd string
+function! GetCwdString()
+	let a:cwd_string = getcwd()
+	let a:cwd_string = substitute(a:cwd_string, '/', '', '')
+	let a:cwd_string = substitute(a:cwd_string, '/', '_', 'g')
+	let a:cwd_string = substitute(a:cwd_string, ' ', '_', 'g')
+	let a:cwd_string = substitute(a:cwd_string, '\', '_', 'g')
 
-		let b:sessiondir = "C:/Program\ Files\ (x86)/vim/sessions/" . a:cwd_string
-		if (filewritable(b:sessiondir) != 2)
-			exe 'silent !mkdir -p ' b:sessiondir
-			redraw!
-		endif
-		let b:sessionfile = b:sessiondir . '_session.vim'
+	return a:cwd_string
+endfunction
+
+" Creates a session
+function! MakeSession()
+	let a:cwd_string = GetCwdString()
+	let b:sessiondir = $HOME."/.nvim/sessions/" . a:cwd_string
+	let b:sessionfile = b:sessiondir . '_session.vim'
+	exe "mksession! " . b:sessionfile
+endfunction
+
+" Updates a session, BUT ONLY IF IT ALREADY EXISTS
+function! UpdateSession()
+	let a:cwd_string = GetCwdString()
+	let b:sessiondir = $HOME."/.nvim/sessions/" . a:cwd_string
+	let b:sessionfile = b:sessiondir . "_session.vim"
+	if (filereadable(b:sessionfile))
 		exe "mksession! " . b:sessionfile
-	endfunction
+		echo "updating session"
+	endif
+endfunction
 
-	" Updates a session, BUT ONLY IF IT ALREADY EXISTS
-	function! UpdateSession()
-		if argc()==0
-			let a:cwd_string = getcwd()
-			let a:cwd_string = substitute(a:cwd_string, ':', '', 'g') 
-			let a:cwd_string = substitute(a:cwd_string, '/', '_', 'g')
-			let a:cwd_string = substitute(a:cwd_string, ' ', '_', 'g')
-			let a:cwd_string = substitute(a:cwd_string, '\', '_', 'g')
+" Loads a session if it exists
+function! LoadSession()
+	let a:cwd_string = GetCwdString()
+	let b:sessiondir = $HOME."/.nvim/sessions/" . a:cwd_string
+	let b:sessionfile = b:sessiondir . "_session.vim"
+	if (filereadable(b:sessionfile))
+		exe 'source ' b:sessionfile
+	else
+		echo "No session loaded."
+	endif
+endfunction
 
-			let b:sessiondir = "C:/Program\ Files\ (x86)/vim/sessions/" . a:cwd_string
-			let b:sessionfile = b:sessiondir . "_session.vim"
-			if (filereadable(b:sessionfile))
-				exe "mksession! " . b:sessionfile
-				echo "updating session"
-			endif
-		endif
-	endfunction
-
-	" Loads a session if it exists
-	function! LoadSession()
-		if argc() == 0
-			let a:cwd_string = getcwd()
-			let a:cwd_string = substitute(a:cwd_string, ':', '', 'g') 
-			let a:cwd_string = substitute(a:cwd_string, '/', '_', 'g')
-			let a:cwd_string = substitute(a:cwd_string, ' ', '_', 'g')
-			let a:cwd_string = substitute(a:cwd_string, '\', '_', 'g')
-
-			let b:sessiondir = "C:/Program\ Files\ (x86)/vim/sessions/" . a:cwd_string
-			let b:sessionfile = b:sessiondir . "_session.vim"
-			if (filereadable(b:sessionfile))
-				exe 'source ' b:sessionfile
-			else
-				echo "No session loaded."
-			endif
-		else
-			let b:sessionfile = ""
-			let b:sessiondir = ""
-		endif
-	endfunction
-
-	au VimEnter * nested :call LoadSession()
-	au VimLeave * :call UpdateSession()
-	map <leader>m :call MakeSession()<CR>
-endif
+au VimEnter * nested :call LoadSession()
+au VimLeave * :call UpdateSession()
 "}}}
 " Appearance {{{ 
 syntax enable "enable syntax processing
 
 set fillchars+=vert:│
-
 "set term=xterm
 "set t_Co=256
 let &t_AB="\e[48;5;%dm"

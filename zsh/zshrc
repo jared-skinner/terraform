@@ -31,6 +31,7 @@ alias cls="clear"
 alias extract="tar -xzvf"
 alias vi="nvim"
 alias vim="nvim"
+alias fzf="find * -type f | fzf"
 
 export TERM='xterm-256color'
 
