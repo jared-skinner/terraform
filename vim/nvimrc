@@ -2,7 +2,7 @@
 " requirements:
 "
 "	1.	custom hybrid material theme for gvim
-"		https://github.com/tomasr/molokai
+"		included in this repo as hm.vim
 "
 "	2.	the DejaVu Sans Mono for Powerline font
 "		https://github.com/powerline/fonts
@@ -220,13 +220,12 @@ au VimLeave * :call UpdateSession()
 syntax enable "enable syntax processing
 
 set fillchars+=vert:│
-"set term=xterm
 "set t_Co=256
 let &t_AB="\e[48;5;%dm"
 let &t_AF="\e[38;5;%dm"
 let g:hybrid_use_Xresources = 1
 set background=dark
-colorscheme hybrid
+colorscheme hm
 set colorcolumn=81										" a ruler to make off the 80th column
 "hi ColorColumn ctermbg=1
 " }}}
