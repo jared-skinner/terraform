@@ -85,6 +85,8 @@ map <F4> :setlocal spell! spelllang=en_us<CR>
 
 " save and compile latex
 nnoremap <F2> :w<CR><leader>ll
+
+map <C-n> :NERDTreeToggle<CR>
 " }}}
 " Leader Shortcuts {{{
 " leader is comma
@@ -143,9 +145,9 @@ call plug#begin(path)
 	Plug 'critiqjo/lldb.nvim'				" debugging support
 	Plug 'mhinz/vim-grepper'				" the grep that greps the hardest
 	Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-	Plug 'junegunn/fzf.vim'
+	Plug 'junegunn/fzf.vim'					" fantastically fast fuzzy find
+	Plug 'scrooloose/nerdtree'				" browse files while vimming
 "	Plug 'Floobits/floobits-neovim'		" paired programming!
-	"Plug 'benekastah/neomake'				" A linter of bad-ass proportions
 call plug#end()
 " }}}
 " FZF Settings {{{
