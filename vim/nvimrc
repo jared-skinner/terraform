@@ -246,57 +246,22 @@ syntax enable "enable syntax processing
 
 set fillchars+=vert:│
 
-if has("gui_running")
-	set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ 8	" a pretty font for gui
-
-	colorscheme hybrid_material
-	set colorcolumn=81										" a ruler to make off the 80th column
-
-	" set the color of the color column
-	hi ColorColumn guibg=#1a1a1a
-
-	hi CursorLine guibg=#303030
-
-	" git colors
-	highlight GitGutterAdd guifg=#77dd5a
-	highlight GitGutterAdd guibg=#222222
-	highlight GitGutterChange guifg=#f7a554
-	highlight GitGutterChange guibg=#222222
-	highlight GitGutterDelete guifg=#f75454
-	highlight GitGutterDelete guibg=#222222
-	highlight GitGutterChangeDelete guifg=#f7a554
-	highlight GitGutterChangeDelete guibg=#222222
-
-	" spell check colors
-	highlight SpellBad		term=Reverse	guisp=#f75454	gui=undercurl	guibg=#2D2D2D
-	highlight SpellCap		term=Reverse	guisp=#5191ff	gui=undercurl	guibg=#2D2D2D
-	highlight SpellLocal	term=Underline	guisp=#77dd5a	gui=undercurl	guibg=#2D2D2D
-	highlight SpellRare		term=underline	guisp=#ae51ff	gui=undercurl	guibg=#2D2D2D
-else
-	"set term=xterm
-    "set t_Co=256
-    let &t_AB="\e[48;5;%dm"
-    let &t_AF="\e[38;5;%dm"
-	let g:hybrid_use_Xresources = 1
-	set background=dark
-	colorscheme hybrid
-	set colorcolumn=81										" a ruler to make off the 80th column
-	"hi ColorColumn ctermbg=1
-endif
-
+"set term=xterm
+"set t_Co=256
+let &t_AB="\e[48;5;%dm"
+let &t_AF="\e[38;5;%dm"
+let g:hybrid_use_Xresources = 1
+set background=dark
+colorscheme hybrid
+set colorcolumn=81										" a ruler to make off the 80th column
+"hi ColorColumn ctermbg=1
 " }}}
 " Airline {{{
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline_powerline_fonts = 1
 let g:Powerline_symbols = 'fancy'
-
-if has("gui_running")
-	let g:airline_theme='tomorrow'
-else
-	let g:airline_theme='hybrid'
-endif
-
+let g:airline_theme='bubblegum'
 set laststatus=2 " for air line so the status bar at the bottom always displays
 " }}}
 " Vim LaTeX {{{
