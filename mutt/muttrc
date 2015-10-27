@@ -1,4 +1,6 @@
-set my_gpass=`pass google.com/gmail/jaredds66@gmail.com_x220`
+# mutt rc file
+
+# Signature {{{
 
 # Use GPGME
 set crypt_use_gpgme = yes
@@ -17,27 +19,20 @@ set crypt_verify_sig = yes
 
 # Autosign messages
 set crypt_autosign = yes
-
+#}}}
+# GMail Config {{{
 
 #setts passwords
+set my_gpass=`pass google.com/gmail/jaredds66@gmail.com_x220`
+
 set imap_user = "jaredds66@gmail.com"
 set imap_pass = $my_gpass
-
 set smtp_pass = $my_gpass
-#set smtp_url = "smtp://jaredds66@gmail.com:587/"
 set smtp_url = "smtp://jaredds66@smtp.gmail.com:587/"
 
 set from = "jaredds66@gmail.com"
 set realname = "Jared Skinner"
 
-set editor = "nvim"
-
-## GMail Config
-#(most of this should work with other IMAP accounts) 
-## Basic config, you can leave this as is in most cases
-# Not sure if timeout and keepalive value tweaking will help intermittent connection issues
-# (time values are in seconds)
-set wait_key = no
 set folder = "imaps://imap.gmail.com:993"
 set spoolfile = "+INBOX"
 set imap_check_subscribed
@@ -48,8 +43,8 @@ set timeout = 300
 unset imap_passive
 # Keep IMAP connection alive by polling intermittently
 set imap_keepalive = 210
-set postponed = "+[GMail]/Drafts"
-set record = "+[GMail]/Sent Mail"
+set postponed = "+[Gmail]/Drafts"
+set record = "+[Gmail]/Sent Mail"
 set header_cache=~/.mutt/cache/headers
 set message_cachedir=~/.mutt/cache/bodies
 set certificate_file=~/.mutt/certificates
@@ -59,6 +54,27 @@ set include
 set sort = 'threads'
 set sort_aux = 'reverse-last-date-received'
 set auto_tag = yes
+#}}}
+# Appearance {{{
+source ~/.mutt/themes/vombatidae.mutt
+
+#}}}
+# Basic Options {{{
+set editor = "nvim"
+set wait_key = no        # shut up, mutt
+set mbox_type = Maildir  # mailbox type
+set timeout = 3          # idle time before scanning
+set mail_check = 0       # minimum time between scans
+unset move               # gmail does that
+set delete               # don't ask, just do
+unset confirmappend      # don't ask, just do!
+set quit                 # don't ask, just do!!
+unset mark_old           # read/new is good enough for me
+set beep_new             # bell on new mails
+set pipe_decode          # strip headers and eval mimes when piping
+set thorough_search      # strip headers and eval mimes before searching
+
+
 
 ## Reminds you of missing subject&unmodified or empty body with msg sent as default
 set abort_nosubject = ask-no
@@ -70,25 +86,48 @@ hdr_order Date From To Cc
 alternative_order text/plain text/html *
 auto_view text/html
 
-
-
-#colors
-#---- Mutt Colors for Black Background -------
-color   hdrdefault   blue              black
-color   quoted       blue              black
-color   signature    blue              black
-color   attachment   red               black
-color   message      brightred         black
-color   error        brightred         black
-color   indicator    green               black
-color   status       brightgreen       blue
-color   tree         white             black
-color   normal       white             black
-color   markers      red               black
-color   search       white             black
-color   tilde        brightmagenta     black
-color   index        blue              black ~F
-color   index        red               black "~N|~O"
-
 #collapse threads by default
 folder-hook . "exec collapse-all"
+
+# }}}
+# Index View Options {{{
+set date_format = "%m/%d"
+set index_format = "[%Z]  %D  %-20.20F  %s"
+set sort = threads                         # like gmail
+set sort_aux = reverse-last-date-received  # like gmail
+set uncollapse_jump                        # don't collapse on an unread message
+set sort_re                                # thread based on regex
+set reply_regexp = "^(([Rr][Ee]?(\[[0-9]+\])?: *)?(\[[^]]+\] *)?)*"
+# }}}
+# Index Key Bindings {{{
+bind index gg       first-entry
+bind index G        last-entry
+
+bind index R        group-reply
+bind index <tab>    sync-mailbox
+bind index <space>  collapse-thread
+
+# Ctrl-R to mark all as read
+macro index \Cr "T~U<enter><tag-prefix><clear-flag>N<untag-pattern>.<enter>" "mark all messages as read"
+
+# Sync email
+macro index O "<shell-escape>offlineimap<enter>"           "run offlineimap to sync all mail"
+macro index o "<shell-escape>offlineimap -qf INBOX<enter>" "run offlineimap to sync inbox"
+
+# Saner copy/move dialogs
+macro index C "<copy-message>?<toggle-mailboxes>" "copy a message to a mailbox"
+macro index M "<save-message>?<toggle-mailboxes>" "move a message to a mailbox"
+# }}}
+# Sidebar Patch {{{
+#set sidebar_delim   = '  │'
+#set sidebar_visible = yes
+#set sidebar_width   = 24
+#color sidebar_new color221 color233
+# }}}
+# Sidebar Navigation {{{
+#bind index,pager <down>   sidebar-next
+#bind index,pager <up>     sidebar-prev
+#bind index,pager <right>  sidebar-open
+# }}}
+
+#" vim:foldmethod=marker:foldlevel=0
