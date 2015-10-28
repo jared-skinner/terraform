@@ -57,24 +57,19 @@ set auto_tag = yes
 #}}}
 # Appearance {{{
 source ~/.mutt/themes/vombatidae.mutt
-
 #}}}
 # Basic Options {{{
 set editor = "nvim"
 set wait_key = no        # shut up, mutt
 set mbox_type = Maildir  # mailbox type
 set timeout = 3          # idle time before scanning
-set mail_check = 0       # minimum time between scans
 unset move               # gmail does that
 set delete               # don't ask, just do
 unset confirmappend      # don't ask, just do!
 set quit                 # don't ask, just do!!
 unset mark_old           # read/new is good enough for me
-set beep_new             # bell on new mails
 set pipe_decode          # strip headers and eval mimes when piping
 set thorough_search      # strip headers and eval mimes before searching
-
-
 
 ## Reminds you of missing subject&unmodified or empty body with msg sent as default
 set abort_nosubject = ask-no
@@ -88,7 +83,6 @@ auto_view text/html
 
 #collapse threads by default
 folder-hook . "exec collapse-all"
-
 # }}}
 # Index View Options {{{
 set date_format = "%m/%d"
@@ -119,15 +113,15 @@ macro index C "<copy-message>?<toggle-mailboxes>" "copy a message to a mailbox"
 macro index M "<save-message>?<toggle-mailboxes>" "move a message to a mailbox"
 # }}}
 # Sidebar Patch {{{
-#set sidebar_delim   = '  │'
-#set sidebar_visible = yes
-#set sidebar_width   = 24
-#color sidebar_new color221 color233
+set sidebar_delim   = '  │'
+set sidebar_visible = yes
+set sidebar_width   = 24
+color sidebar_new color221 color233
 # }}}
 # Sidebar Navigation {{{
-#bind index,pager <down>   sidebar-next
-#bind index,pager <up>     sidebar-prev
-#bind index,pager <right>  sidebar-open
+bind index,pager <down>   sidebar-next
+bind index,pager <up>     sidebar-prev
+bind index,pager <right>  sidebar-open
 # }}}
 
 #" vim:foldmethod=marker:foldlevel=0
