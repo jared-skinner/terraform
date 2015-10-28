@@ -32,6 +32,7 @@ alias extract="tar -xzvf"
 alias vi="nvim"
 alias vim="nvim"
 alias fzf="find * -type f | fzf"
+alias home="ssh jared@aquinasavila.com"
 
 export TERM='xterm-256color'
 
