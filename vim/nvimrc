@@ -81,7 +81,7 @@ nnoremap <CR> :nohlsearch<CR>
 nnoremap <space> za
 
 " toggle spell check
-map <F4> :setlocal spell! spelllang=en_us<CR>
+map <F7> :setlocal spell! spelllang=en_us<CR>
 
 " save and compile latex
 nnoremap <F2> :w<CR><leader>ll
