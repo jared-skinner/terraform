@@ -33,6 +33,7 @@ alias vi="nvim"
 alias vim="nvim"
 alias fzf="find * -type f | fzf"
 alias home="ssh jared@aquinasavila.com"
+alias task="clear && task"
 
 export TERM='xterm-256color'
 
