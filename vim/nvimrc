@@ -52,6 +52,13 @@ filetype indent on				" load file type specific indent files
 filetype off					" required
 
 au FocusLost * silent! wa		" save all windows on lose focus
+
+
+" enter insert mode any time focus is put on a terminal
+autocmd BufWinEnter,WinEnter term://* startinsert
+
+" exit normal mode when leaving a term
+autocmd BufLeave term://* stopinsert
 " }}}
 " Folding {{{
 set foldenable			" enable folding
@@ -87,6 +94,12 @@ map <F7> :setlocal spell! spelllang=en_us<CR>
 nnoremap <F2> :w<CR><leader>ll
 
 map <C-n> :NERDTreeToggle<CR>
+
+"jk to go to normal mode when in term mode
+tnoremap jk <C-\><C-n>
+
+"easy navigation to and from ternimal in NVim
+tnoremap <C-w> <C-\><C-n><C-w>
 " }}}
 " Leader Shortcuts {{{
 " leader is comma
