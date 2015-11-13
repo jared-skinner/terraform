@@ -10,7 +10,7 @@
 	editor = nvim
 
 [merge]
-  tool = nvim -d
+	tool = nvim -d
 
 [diff]
-  external = nvim -d
+	external = nvim -d
