@@ -137,6 +137,9 @@ nnoremap <leader>w :set wrap! linebreak nolist <CR> :set list <CR> :set listchar
 
 " save/update session
 nnoremap <leader>m :call MakeSession()<CR>
+
+" fold everythin
+nnoremap <leader>f :%foldc<CR>
 " }}}
 " Plugins {{{
 let path=$HOME.'/.nvim/autoload/'
@@ -145,7 +148,7 @@ call plug#begin(path)
 	Plug 'ervandew/supertab'				" better tab completion
 	Plug 'bling/vim-airline'				" cool window decoration
 	Plug 'tpope/vim-fugitive'				" git wrapper for vim
-	Plug 'airblade/vim-gitgutter'			" self explainatory
+	Plug 'mhinz/vim-signify'				" this can be used as a gutter for git, svn and cvs
 	Plug 'rking/ag.vim'						" better global search
 	Plug 'sjl/gundo.vim'					" tree undo history
 	Plug 'moll/vim-bbye'					" close buffers without messing with window layout
@@ -232,6 +235,7 @@ au VimLeave * :call UpdateSession()
 " Appearance {{{ 
 syntax enable "enable syntax processing
 
+
 set fillchars+=vert:│
 "set t_Co=256
 let &t_AB="\e[48;5;%dm"
@@ -240,6 +244,12 @@ let g:hybrid_use_Xresources = 1
 set background=dark
 colorscheme hm
 set colorcolumn=81										" a ruler to make off the 80th column
+
+highlight SignifySignAdd    cterm=bold ctermbg=234  ctermfg=119
+highlight SignifySignDelete cterm=bold ctermbg=234  ctermfg=167
+highlight SignifySignChange cterm=bold ctermbg=234  ctermfg=3
+
+let g:signify_sign_change            = '~'
 " }}}
 " Airline {{{
 let g:airline#extensions#tabline#enabled = 1
