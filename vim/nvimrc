@@ -19,6 +19,12 @@
 "	6.	vim-latex
 "		http://vim-latex.sourceforge.net/index.php?subject=download&title=Download
 
+"	7.	YouCompleteMe
+"		cmake is needed for compilation and a binary of llvm-clan is necessary
+"		for fancy c syntax support.  Once these things are in place a compiled
+"		component of the plugin needs to be build instructions below:
+"		http://valloric.github.io/YouCompleteMe/
+
 " UI Config {{{
 set modelines=1					" check end of file for folding instructions
 set number						" this sets line numbers
@@ -52,7 +58,6 @@ filetype indent on				" load file type specific indent files
 filetype off					" required
 
 au FocusLost * silent! wa		" save all windows on lose focus
-
 
 " enter insert mode any time focus is put on a terminal
 autocmd BufWinEnter,WinEnter term://* startinsert
@@ -145,14 +150,14 @@ nnoremap <leader>f :%foldc<CR>
 let path=$HOME.'/.nvim/autoload/'
 
 call plug#begin(path)
-	Plug 'ervandew/supertab'				" better tab completion
+	Plug 'Valloric/YouCompleteMe'			" better tab completion
 	Plug 'bling/vim-airline'				" cool window decoration
 	Plug 'tpope/vim-fugitive'				" git wrapper for vim
 	Plug 'mhinz/vim-signify'				" this can be used as a gutter for git, svn and cvs
 	Plug 'rking/ag.vim'						" better global search
 	Plug 'sjl/gundo.vim'					" tree undo history
 	Plug 'moll/vim-bbye'					" close buffers without messing with window layout
-	Plug 'scrooloose/syntastic'				" syntax checking magic
+	Plug 'scrooloose/syntastic'				" syntax checking magic, as neomake get better, i want to replace this with that
 	Plug 'tpope/vim-commentary'				" hot-keys for commenting stuff out
 	Plug 'justinmk/vim-syntax-extra'		" more syntax highlighting
 	Plug 'kshenoy/vim-signature'			" show marks
@@ -163,12 +168,7 @@ call plug#begin(path)
 	Plug 'junegunn/fzf.vim'					" fantastically fast fuzzy find
 	Plug 'scrooloose/nerdtree'				" browse files while vimming
 	Plug 'kchmck/vim-coffee-script'			" syntax highlighting for coffeescript
-	Plug 'Shougo/deoplete.nvim'				" better completion
-"	Plug 'Floobits/floobits-neovim'		" paired programming!
 call plug#end()
-" }}}
-" Deoplete Settings {{{
-"let g:deoplete#enable_at_startup = 1
 " }}}
 " FZF Settings {{{
 map <C-p> :Files .<CR>
