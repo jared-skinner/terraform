@@ -38,7 +38,7 @@ alias task="clear && task"
 export TERM='xterm-256color'
 
 # this takes care of ssh and pgp management
-eval $(keychain --quiet --agents gpg,ssh --eval id_rsa github_id_rsa FD0E9B93)
+#eval $(keychain --quiet --agents gpg,ssh --eval id_rsa github_id_rsa FD0E9B93)
 
 source ~/.zsh_local
 
