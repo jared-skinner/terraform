@@ -2,7 +2,7 @@
 export ZSH=~/.oh-my-zsh
 
 # An attractive theme
-ZSH_THEME="robbyrussell"
+ZSH_THEME="bira"
 
 # hyphen insensitive
 HYPHEN_INSENSITIVE="true"
@@ -34,6 +34,9 @@ alias vim="nvim"
 alias fzf="find * -type f | fzf"
 alias home="ssh jared@aquinasavila.com"
 alias task="clear && task"
+
+alias capstone="ssh dpurks87@192.185.4.35 -p 2222"
+
 
 export TERM='xterm-256color'
 
