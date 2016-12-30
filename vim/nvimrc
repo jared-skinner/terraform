@@ -74,10 +74,10 @@ autocmd BufLeave term://* stopinsert
 
 " }}}
 " Folding {{{
-set foldenable			" enable folding
-set foldlevelstart=10	" start folding then we are 10 blocks deep
-set foldnestmax=1		" 10 nested fold max
-set foldmethod=syntax	" fold based on indent level
+set nofoldenable			" disable folding
+"set foldlevelstart=10	" start folding then we are 10 blocks deep
+"set foldnestmax=1		" 10 nested fold max
+"set foldmethod=syntax	" fold based on indent level
 " }}}
 " Remaps {{{
 " navigate between buffers using tab and shift+tab
@@ -117,7 +117,6 @@ tnoremap <C-w> <C-\><C-n><C-w>
 nmap <F8> :TagbarToggle<CR>
 
 "map <C-j> <Plug>(easymotion-bd-w)
-
 " }}}
 " Leader Shortcuts {{{
 " leader is comma
@@ -136,7 +135,7 @@ nnoremap <leader>ez :vsp ~/.zshrc<CR>
 nnoremap <leader>sv :source $MYVIMRC<CR>
 
 " open ag.vim **note, the space at the end is there for a reason!
-nnoremap <leader>a :Ag 
+nnoremap <leader>a :Find 
 
 " next tab
 nnoremap <leader><TAB> :tabnext<CR>
@@ -178,12 +177,11 @@ call plug#begin(path)
 	Plug 'junegunn/fzf.vim'					" fantastically fast fuzzy find
 	Plug 'scrooloose/nerdtree'				" browse files while vimming
 	Plug 'ryanoasis/vim-devicons'
+	Plug 'neomake/neomake'					" async syntax checking
+	Plug 'rhysd/vim-crystal'				" crystal lang syntax highlighting
 
-"	Plug 'scrooloose/syntastic'				" syntax checking magic, as neomake get better, i want to replace this with that
-"	Plug 'tpope/vim-commentary'				" hot-keys for commenting stuff out
 "	Plug 'vim-scripts/autotags'				" autoupdate your ctags files
 "	Plug 'critiqjo/lldb.nvim'				" debugging support
-"	Plug 'kchmck/vim-coffee-script'			" syntax highlighting for coffeescript
 "	Plug 'tpope/vim-unimpaired'				" cool new mappings
 "	Plug 'majutsushi/tagbar'				" tagbar
 "	Plug 'arakashic/chromatica.nvim'
@@ -192,20 +190,31 @@ call plug#end()
 " FZF Settings {{{
 map <C-p> :Files .<CR>
 " }}}
-" Syntastic Settings {{{
-"set statusline+=%#warningmsg#
-"set statusline+=%{SyntasticStatuslineFlag()}
-"set statusline+=%*
+" Neomake Settings {{{
 
-"let g:syntastic_always_populate_loc_list = 1
-"let g:syntastic_check_on_open = 1
-"let g:syntastic_check_on_wq = 0
+let g:neomake_c_clang_args = ['-fsyntax-only', '-I/home/jared/osi_lint/include/', '-I/home/jared/osi_lint/opennet/include/', '-I/home/jared/osi_lint/volt_ctrl/include/', '-DLINUX', '-DUNIX', '-D_REENTRANT', '-fPIC', '-DOSI64']
+let g:neomake_c_enabled_makers = ['gcc', 'clang']
+let g:neomake_cpp_enabled_makers = ['gcc']
+if  (&ft=='cpp' || &ft=='hpp')
+	let g:neomake_c_gcc_args = ['-fsyntax-only', '-std=c++11']
+else
+	let g:neomake_c_gcc_args = ['-fsyntax-only', '-I/home/jared/osi_lint/include/', '-I/home/jared/osi_lint/opennet/include/', '-I/home/jared/osi_lint/volt_ctrl/include/', '-DLINUX', '-DUNIX', '-D_REENTRANT', '-fPIC', '-DOSI64']
+endif
+
+
+autocmd! BufWritePost * call Make_and_copy()
+function! Make_and_copy()
+	NeomakeSh python ~/Scripts/filesync.py -f %:p
+	NeomakeSh python ~/Scripts/update_ctags.py %:p
+	Neomake
+endfunction
+
 " }}}
 " YouCompleteMe settings {{{
 	let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 	let g:ycm_show_diagnostics_ui = 0
-	let g:ycm_register_as_syntastic_checker = 0
-	let g:ycm_disable_for_files_larger_than_kb = 400
+	let g:ycm_register_as_syntastic_checker = 1
+	let g:ycm_disable_for_files_larger_than_kb = 180
 " }}}
 " Signify Settings {{{
     nmap <leader>gj <plug>(signify-next-hunk)
@@ -219,6 +228,7 @@ set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
 set writebackup
 "}}}
 " Custom Functions {{{
+
 " Go away and Come back.  This script auto saves session info and loads it.
 
 " Get cwd string

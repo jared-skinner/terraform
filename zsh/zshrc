@@ -15,7 +15,7 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 plugins=(git)
 
 # User configuration
-export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/lib"
+export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/lib:/home/jared/.cargo/bin"
 
 source $ZSH/oh-my-zsh.sh
 
@@ -58,3 +58,17 @@ zstyle ':completion:*' matcher-list '' \
 LS_COLORS=$LS_COLORS:'di=0;94:ow=1;90;43' ; export LS_COLORS
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# --files: List files that would be searched but do not search
+# --no-ignore: Do not respect .gitignore, etc...
+# --hidden: Search hidden files and folders
+# --follow: Follow symlinks
+# --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
+export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git/*" --glob "!.svn/*" --glob "!*.atr" --glob "!*.atd" --glob "!*.exe" --glob "!*.dll" --glob "!*.png" --glob "!*.ilk" --glob "!*.pdb" --glob "!*.exp" --glob "!*.lib" --glob "!*.bmp" --glob "!*.DB" --glob "!*.tab" --glob "!*.ODS" --glob "!*.wcs" --glob "!*/javabin/*" --glob "!*.obj" --glob "!*/srcNET/*" --glob "!*/srcJava/*" --glob "!*vcxproj*" --glob "!*vcproj*" --glob "!*bin*"'
+
+case $- in *i*)
+    [ -z "$TMUX" ] && exec tmux
+esac
+
+
+
